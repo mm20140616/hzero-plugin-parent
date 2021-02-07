@@ -100,6 +100,8 @@ public class Position extends AuditDomain {
 
     @Transient
     private String unitName;
+    @Transient
+    private String companyName;
 
     /**
      * @return 返回岗位ID
@@ -257,6 +259,14 @@ public class Position extends AuditDomain {
     public Position setUnitName(String unitName) {
         this.unitName = unitName;
         return this;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
     }
 
     @Override

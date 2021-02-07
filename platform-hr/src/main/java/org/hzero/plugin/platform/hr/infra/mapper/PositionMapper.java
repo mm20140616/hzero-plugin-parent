@@ -116,8 +116,8 @@ public interface PositionMapper extends BaseMapper<Position> {
      * @param positionName 岗位名称
      * @return 岗位列表
      */
-    List<Position> selectPosition(@Param("tenantId") Long tenantId, @Param("positionCode") String positionCode, @Param("positionName") String positionName);
-    
+    List<Position> selectPosition(@Param("tenantId") Long tenantId, @Param("positionCode") String positionCode, @Param("positionName") String positionName, @Param("companyName") String companyName);
+
     /**
      * 根据组织Id查询岗位
      *
@@ -125,8 +125,8 @@ public interface PositionMapper extends BaseMapper<Position> {
      * @param unitId
      * @return 岗位列表
      */
-    List<Position> selectPositionByUnit(@Param("tenantId") Long tenantId, @Param("unitId") Long unitId,@Param("keyWord") String keyWord);
-    
+    List<Position> selectPositionByUnit(@Param("tenantId") Long tenantId, @Param("unitId") Long unitId, @Param("keyWord") String keyWord);
+
     /**
      * 查询岗位
      *
@@ -136,7 +136,7 @@ public interface PositionMapper extends BaseMapper<Position> {
      * @param positionName 名称
      * @return 岗位
      */
-    List<PositionDTO> selectPlusPositionTree(@Param("tenantId") long tenantId, @Param("unitCompanyId") Long unitCompanyId,@Param("unitId") Long unitId,@Param("keyWord") String keyWord);
+    List<PositionDTO> selectPlusPositionTree(@Param("tenantId") long tenantId, @Param("unitCompanyId") Long unitCompanyId, @Param("unitId") Long unitId, @Param("keyWord") String keyWord);
 
     /**
      * 新版组织架构查询岗位下员工
@@ -144,5 +144,5 @@ public interface PositionMapper extends BaseMapper<Position> {
      * @param positionId 查询条件
      * @return 查询结果
      */
-    List<EmployeeDTO> queryEmployeesByPositionId(@Param("positionId") Long positionId,@Param("tenantId") Long tenantId,@Param("keyWord") String keyWord,@Param("status") String status,@Param("primaryPositionFlag") Integer primaryPositionFlag);
+    List<EmployeeDTO> queryEmployeesByPositionId(@Param("positionId") Long positionId, @Param("tenantId") Long tenantId, @Param("keyWord") String keyWord, @Param("status") String status, @Param("primaryPositionFlag") Integer primaryPositionFlag);
 }

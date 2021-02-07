@@ -10,6 +10,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hzero.boot.platform.lov.annotation.LovValue;
 import org.hzero.core.algorithm.tree.Child;
 import org.hzero.core.util.Regexs;
 import org.hzero.mybatis.domian.SecurityToken;
@@ -43,6 +44,7 @@ public class UnitDTO extends Child<UnitDTO> implements SecurityToken{
     @NotEmpty
     @Pattern(regexp = Regexs.CODE)
     @ApiModelProperty(value = "部门类型", required = true)
+    @LovValue(lovCode = "HPFM.HR.UNIT_TYPE", meaningField = "unitTypeMeaning")
     private String unitTypeCode;
     @NotNull
     @ApiModelProperty(value = "关联公司ID")

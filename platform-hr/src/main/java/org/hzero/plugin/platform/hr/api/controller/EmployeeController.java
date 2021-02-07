@@ -54,8 +54,9 @@ public class EmployeeController extends BaseController {
                                                @RequestParam(required = false) String employeeNum,
                                                @RequestParam(required = false) String name,
                                                @RequestParam(required = false) Integer enabledFlag,
+                                               @RequestParam(required = false) @Encrypt Long userId,
                                                @ApiIgnore @SortDefault(value = "employeeNum", direction = Sort.Direction.ASC) PageRequest pageRequest) {
-        return Results.success(employeeService.listEmployee(organizationId, employeeNum, name, enabledFlag, pageRequest));
+        return Results.success(employeeService.listEmployee(organizationId, employeeNum, name, enabledFlag, pageRequest, userId));
     }
 
     @ApiOperation(value = "根据员工编码获取员工信息")

@@ -130,7 +130,7 @@ public class PositionRepositoryImpl extends BaseRepositoryImpl<Position> impleme
 
     @Override
     public Page<Position> pagePosition(PageRequest pageRequest, Position position) {
-        return PageHelper.doPageAndSort(pageRequest, () -> positionMapper.selectPosition(position.getTenantId(), position.getPositionCode(), position.getPositionName()));
+        return PageHelper.doPageAndSort(pageRequest, () -> positionMapper.selectPosition(position.getTenantId(), position.getPositionCode(), position.getPositionName(), position.getCompanyName()));
     }
 
     @Override

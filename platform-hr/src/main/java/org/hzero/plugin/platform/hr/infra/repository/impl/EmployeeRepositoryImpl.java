@@ -1,8 +1,9 @@
 package org.hzero.plugin.platform.hr.infra.repository.impl;
 
-import io.choerodon.core.domain.Page;
-import io.choerodon.mybatis.pagehelper.PageHelper;
-import io.choerodon.mybatis.pagehelper.domain.PageRequest;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
+
 import org.hzero.boot.platform.plugin.hr.EmployeeHelper;
 import org.hzero.core.base.BaseConstants;
 import org.hzero.core.redis.RedisHelper;
@@ -19,9 +20,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
+import io.choerodon.core.domain.Page;
+import io.choerodon.mybatis.pagehelper.PageHelper;
+import io.choerodon.mybatis.pagehelper.domain.PageRequest;
 
 /**
  * 员工表 资源库实现
@@ -57,9 +58,9 @@ public class EmployeeRepositoryImpl extends BaseRepositoryImpl<Employee> impleme
     }
 
     @Override
-    public Page<Employee> listEmployee(Long tenantId, String employeeNum, String name, Integer enabledFlag, PageRequest pageRequest) {
+    public Page<Employee> listEmployee(Long tenantId, String employeeNum, String name, Integer enabledFlag, PageRequest pageRequest, Long userId) {
 
-        return PageHelper.doPageAndSort(pageRequest, () -> employeeMapper.listEmployee(tenantId, employeeNum, name, enabledFlag));
+        return PageHelper.doPageAndSort(pageRequest, () -> employeeMapper.listEmployee(tenantId, employeeNum, name, enabledFlag, userId));
     }
 
     @Override
@@ -164,22 +165,7 @@ public class EmployeeRepositoryImpl extends BaseRepositoryImpl<Employee> impleme
 
     @Override
     public Page<Employee> doPageAndSort(PageRequest pageRequest, Employee queryParam) {
-        Condition condition = Condition.builder(Employee.class)
-                .andWhere(Sqls.custom().andEqualTo(Employee.FIELD_TENANT_ID, queryParam.getTenantId(), true)
-                        .andEqualTo(Employee.FIELD_EMPLOYEE_ID, queryParam.getEmployeeId(), true)
-                        .andLike(Employee.FIELD_EMPLOYEE_NUM, queryParam.getEmployeeNum(), true)
-                        .andLike(Employee.FIELD_NAME, queryParam.getName(), true)
-                        .andLike(Employee.FIELD_NAME_EN, queryParam.getNameEn(), true)
-                        .andLike(Employee.FIELD_EMAIL, queryParam.getEmail(), true)
-                        .andLike(Employee.FIELD_MOBILE, queryParam.getMobile(), true)
-                        .andEqualTo(Employee.FIELD_GENDER, queryParam.getGender(), true)
-                        .andLike(Employee.FIELD_CID, queryParam.getCid(), true)
-                        .andEqualTo(Employee.FIELD_STATUS, queryParam.getStatus(), true)
-                        .andLike(Employee.FIELD_QUICT_INDEX, queryParam.getQuickIndex(), true)
-                        .andLike(Employee.FIELD_PHONETICIZE, queryParam.getPhoneticize(), true)
-                        .andEqualTo(Employee.FIELD_ENABLE_FLAG, queryParam.getEnabledFlag(), true))
-                .build();
-        return PageHelper.doPageAndSort(pageRequest, () -> this.selectByCondition(condition));
+        return PageHelper.doPageAndSort(pageRequest, () -> employeeMapper.queryEmployeeByCondition(queryParam));
     }
 
     @Override

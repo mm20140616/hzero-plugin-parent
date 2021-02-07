@@ -64,9 +64,9 @@ public class Employee extends AuditDomain {
             if (quickIndex.length() > PlatformHrConstants.QUICK_INDEX_LENGTH) {
                 // 快速索引过长，截取前240个字符，并排除不完整的拼音内容
                 this.quickIndex =
-                                StringUtils.join(StringUtils.substringBeforeLast(
-                                                StringUtils.substring(quickIndex, BaseConstants.Digital.ZERO,
-                                                                PlatformHrConstants.QUICK_INDEX_LENGTH),
+                        StringUtils.join(StringUtils.substringBeforeLast(
+                                StringUtils.substring(quickIndex, BaseConstants.Digital.ZERO,
+                                        PlatformHrConstants.QUICK_INDEX_LENGTH),
                                 BaseConstants.Symbol.VERTICAL_BAR), BaseConstants.Symbol.VERTICAL_BAR);
             }
         }
@@ -76,10 +76,10 @@ public class Employee extends AuditDomain {
             if (phoneticize.length() > PlatformHrConstants.PINYIN_LENGTH) {
                 // 拼音长度过长，截取前240个字符，排除不完整的拼音内容
                 this.phoneticize =
-                                StringUtils.join(StringUtils.substringBeforeLast(
-                                                StringUtils.substring(phoneticize, BaseConstants.Digital.ZERO,
-                                                                PlatformHrConstants.PINYIN_LENGTH),
-                                                BaseConstants.Symbol.VERTICAL_BAR), BaseConstants.Symbol.VERTICAL_BAR);
+                        StringUtils.join(StringUtils.substringBeforeLast(
+                                StringUtils.substring(phoneticize, BaseConstants.Digital.ZERO,
+                                        PlatformHrConstants.PINYIN_LENGTH),
+                                BaseConstants.Symbol.VERTICAL_BAR), BaseConstants.Symbol.VERTICAL_BAR);
             }
         }
     }
@@ -125,6 +125,8 @@ public class Employee extends AuditDomain {
     private LocalDate entryDate;
     @Transient
     private String statusMeaning;
+    @Transient
+    private String companyName;
 
     @Transient
     private List<EmployeeAssignDTO> employeeAssignList;
@@ -325,12 +327,34 @@ public class Employee extends AuditDomain {
         return this;
     }
 
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
     @Override
     public String toString() {
-        return "Employee [" + "employeeId=" + employeeId + ", employeeNum='" + employeeNum + ", name='" + name +
-                ", nameEn='" + nameEn + ", tenantId=" + tenantId + ", email='" + email + ", mobile='" + mobile +
-                ", gender=" + gender + ", cid='" + cid + ", enabledFlag=" + enabledFlag + ", quickIndex='" + quickIndex +
-                ", phoneticize='" + phoneticize + ", status='" + status + ", entryDate=" + entryDate + ']';
+        return "Employee{" +
+                "employeeId=" + employeeId +
+                ", employeeNum='" + employeeNum + '\'' +
+                ", name='" + name + '\'' +
+                ", nameEn='" + nameEn + '\'' +
+                ", tenantId=" + tenantId +
+                ", email='" + email + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", gender=" + gender +
+                ", cid='" + cid + '\'' +
+                ", enabledFlag=" + enabledFlag +
+                ", quickIndex='" + quickIndex + '\'' +
+                ", phoneticize='" + phoneticize + '\'' +
+                ", status='" + status + '\'' +
+                ", entryDate=" + entryDate +
+                ", statusMeaning='" + statusMeaning + '\'' +
+                ", companyName='" + companyName + '\'' +
+                '}';
     }
 }
 

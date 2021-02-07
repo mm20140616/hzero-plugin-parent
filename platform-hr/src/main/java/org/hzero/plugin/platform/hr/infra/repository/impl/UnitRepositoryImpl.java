@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.hzero.boot.platform.lov.adapter.LovAdapter;
+import org.hzero.boot.platform.lov.annotation.ProcessLovValue;
 import org.hzero.boot.platform.lov.dto.LovValueDTO;
 import org.hzero.core.algorithm.tree.Node;
 import org.hzero.core.algorithm.tree.TreeBuilder;
@@ -47,6 +48,7 @@ public class UnitRepositoryImpl extends BaseRepositoryImpl<Unit> implements Unit
     private LovAdapter lovAdapter;
 
     @Override
+    @ProcessLovValue
     public List<UnitDTO> selectDepartment(Unit queryParam) {
         Assert.notNull(queryParam, BaseConstants.ErrorCode.DATA_INVALID);
         Assert.notNull(queryParam.getTenantId(), BaseConstants.ErrorCode.DATA_INVALID);
@@ -55,6 +57,7 @@ public class UnitRepositoryImpl extends BaseRepositoryImpl<Unit> implements Unit
     }
 
     @Override
+    @ProcessLovValue
     public List<UnitDTO> selectCompany(Unit queryParam) {
         Assert.notNull(queryParam, BaseConstants.ErrorCode.DATA_INVALID);
         Assert.notNull(queryParam.getTenantId(), BaseConstants.ErrorCode.DATA_INVALID);
@@ -88,6 +91,7 @@ public class UnitRepositoryImpl extends BaseRepositoryImpl<Unit> implements Unit
      * @return 部门
      */
     @Override
+    @ProcessLovValue
     public List<UnitDTO> selectAllDepartment(Long tenantId, Integer enabledFlag) {
         return unitMapper.selectAllDepartment(tenantId, enabledFlag, getTopUnitCodes(tenantId));
     }
@@ -101,6 +105,7 @@ public class UnitRepositoryImpl extends BaseRepositoryImpl<Unit> implements Unit
      * @return 部门
      */
     @Override
+    @ProcessLovValue
     public List<UnitDTO> selectDepartment(Long tenantId, List<Long> parentUnitIds, List<Long> unitIds) {
         Optional<List<Long>> optPIds = Optional.ofNullable(parentUnitIds);
         Optional<List<Long>> optUIds = Optional.ofNullable(unitIds);
@@ -148,6 +153,7 @@ public class UnitRepositoryImpl extends BaseRepositoryImpl<Unit> implements Unit
     }
 
     @Override
+    @ProcessLovValue
     public List<UnitDTO> selectRootNodeCompany(Long tenantId) {
         return unitMapper.selectRootNodeCompany(tenantId, getTopUnitCodes(tenantId));
     }
@@ -158,6 +164,7 @@ public class UnitRepositoryImpl extends BaseRepositoryImpl<Unit> implements Unit
     }
 
     @Override
+    @ProcessLovValue
     public Page<UnitDTO> pageCompanyUnits(Unit unit, PageRequest pageRequest) {
         Page<UnitDTO> pages = PageHelper.doPage(pageRequest, () -> unitMapper.selectPageCompany(unit, getTopUnitCodes(unit.getTenantId())));
         List<UnitDTO> content = pages.getContent();
@@ -178,7 +185,7 @@ public class UnitRepositoryImpl extends BaseRepositoryImpl<Unit> implements Unit
         if (CollectionUtils.isEmpty(unitIds)) {
             return Collections.emptyList();
         }
-        List<UnitDTO> deptList = unitMapper.selectDepartmentByCondition(tenantId, unitIds, enabledFlag, getTopUnitCodes(tenantId));
+        List<UnitDTO> deptList = listDepartmentByCondition(tenantId, unitIds, enabledFlag);
         return TreeBuilder.buildTree(deptList, new Node<Object, UnitDTO>() {
             @Override
             public Object getParentKey(UnitDTO obj) {
@@ -193,6 +200,7 @@ public class UnitRepositoryImpl extends BaseRepositoryImpl<Unit> implements Unit
     }
 
     @Override
+    @ProcessLovValue
     public List<UnitDTO> listDepartmentByCondition(Long tenantId, List<Long> unitIds, Integer enabledFlag) {
         // 初始化传入的集合参数
         if (CollectionUtils.isEmpty(unitIds)) {
@@ -250,11 +258,13 @@ public class UnitRepositoryImpl extends BaseRepositoryImpl<Unit> implements Unit
     }
 
 	@Override
+    @ProcessLovValue
 	public List<UnitDTO> selectPlusCompany(String keyWord, Long tenantId, String lang) {
 		return unitMapper.selectPlusCompany(keyWord, tenantId, lang);
 	}
 	
 	@Override
+    @ProcessLovValue
 	public List<UnitDTO> selectPlusDepartment(String keyWord,Long unitCompanyId, Long tenantId, String lang) {
 		return unitMapper.selectPlusDepartment(keyWord, unitCompanyId, tenantId, lang);
 	}
@@ -265,6 +275,7 @@ public class UnitRepositoryImpl extends BaseRepositoryImpl<Unit> implements Unit
 	}
 
 	@Override
+    @ProcessLovValue
 	public Page<UnitDTO> pageUnitDept(Long unitId, Long tenantId, String keyWord, Integer enabledFlag,PageRequest pageRequest) {
 		return PageHelper.doPage(pageRequest, () -> unitMapper.queryUnitDept(unitId, tenantId,keyWord,enabledFlag));
 	}

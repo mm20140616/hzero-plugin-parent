@@ -1,14 +1,15 @@
 package org.hzero.plugin.platform.hr.infra.mapper;
 
-import io.choerodon.core.domain.Page;
-import io.choerodon.mybatis.common.BaseMapper;
+import java.util.Date;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 import org.hzero.plugin.platform.hr.api.dto.EmployeeDTO;
 import org.hzero.plugin.platform.hr.domain.entity.Employee;
 import org.hzero.plugin.platform.hr.domain.entity.Position;
 
-import java.util.Date;
-import java.util.List;
+import io.choerodon.core.domain.Page;
+import io.choerodon.mybatis.common.BaseMapper;
 
 /**
  * 员工表Mapper
@@ -29,7 +30,8 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
     Page<Employee> listEmployee(@Param("tenantId") Long tenantId,
                                 @Param("employeeNum") String employeeNum,
                                 @Param("name") String name,
-                                @Param("enabledFlag") Integer enabledFlag);
+                                @Param("enabledFlag") Integer enabledFlag,
+                                @Param("userId") Long userId);
 
     /**
      * 查询当前员工的所有上级领导的员工编号
@@ -149,12 +151,12 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
     /**
      * 根据多个员工编号查询对应的员工详情
      *
-     * @param tenantId      租户ID
-     * @param employeeNums  员工编号
+     * @param tenantId     租户ID
+     * @param employeeNums 员工编号
      * @return 员工详情
      */
     List<EmployeeDTO> selectEmployeesByEmployeeNum(@Param("tenantId") Long tenantId, @Param("employeeNums") List<String> employeeNums);
-    
+
     /**
      * 查询员工详情
      *
@@ -166,9 +168,18 @@ public interface EmployeeMapper extends BaseMapper<Employee> {
 
     /**
      * 查询指定角色关联的员工列表
+     *
      * @param tenantId
      * @param roleId
      * @return
      */
     List<String> queryEmployeeByRoleId(Long tenantId, Long roleId);
+
+    /**
+     * 根据条件查询员工
+     *
+     * @param employee
+     * @return 员工详情列表，包含员工所属公司
+     */
+    List<Employee> queryEmployeeByCondition(Employee employee);
 }

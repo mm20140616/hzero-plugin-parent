@@ -152,7 +152,7 @@ public class HrPlusController extends BaseController {
     @GetMapping("position")
     @CustomPageRequest
     public ResponseEntity<Page<Position>> pagePosition(@PathVariable @ApiParam(value = "租户ID", required = true) Long organizationId,
-                                                       @ApiIgnore @SortDefault(value = {Position.FIELD_UNIT_ID, Position.FIELD_ORDER_SEQ, Position.FIELD_POSITION_ID}) PageRequest pageRequest,
+                                                       @ApiIgnore @SortDefault(value = {Position.FIELD_POSITION_ID}) PageRequest pageRequest,
                                                        Position position) {
         return Results.success(hrService.pagePosition(organizationId, pageRequest, position));
     }

@@ -1,11 +1,12 @@
 package org.hzero.plugin.platform.hr.app.service;
 
-import io.choerodon.core.domain.Page;
-import io.choerodon.mybatis.pagehelper.domain.PageRequest;
+import java.util.List;
+
 import org.hzero.plugin.platform.hr.api.dto.EmployeeDTO;
 import org.hzero.plugin.platform.hr.domain.entity.Employee;
 
-import java.util.List;
+import io.choerodon.core.domain.Page;
+import io.choerodon.mybatis.pagehelper.domain.PageRequest;
 
 /**
  * 员工表应用服务
@@ -28,9 +29,10 @@ public interface EmployeeService {
      * @param name        　姓名
      * @param enabledFlag 有效标识
      * @param pageRequest 　分页条件
+     * @param userId 　用户Id
      * @return 所有的员工
      */
-    Page<Employee> listEmployee(Long tenantId, String employeeNum, String name, Integer enabledFlag, PageRequest pageRequest);
+    Page<Employee> listEmployee(Long tenantId, String employeeNum, String name, Integer enabledFlag, PageRequest pageRequest, Long userId);
 
     /**
      * 通过员工编码查询员工

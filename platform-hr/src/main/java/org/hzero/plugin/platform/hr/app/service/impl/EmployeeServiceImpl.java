@@ -69,8 +69,8 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Page<Employee> listEmployee(Long tenantId, String employeeNum, String name, Integer enabledFlag, PageRequest pageRequest) {
-        return employeeRepository.listEmployee(tenantId, employeeNum, name, enabledFlag, pageRequest);
+    public Page<Employee> listEmployee(Long tenantId, String employeeNum, String name, Integer enabledFlag, PageRequest pageRequest, Long userId) {
+        return employeeRepository.listEmployee(tenantId, employeeNum, name, enabledFlag, pageRequest, userId);
     }
 
     @Override

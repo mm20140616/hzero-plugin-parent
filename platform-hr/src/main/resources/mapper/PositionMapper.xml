@@ -305,34 +305,38 @@
     </select>
     <select id="selectPosition" resultType="org.hzero.plugin.platform.hr.domain.entity.Position">
         <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()"/>
-        SELECT
-            hp.position_id,
-            hp.tenant_id,
-            hp.unit_company_id,
-            hp.unit_id,
-            hp.position_code,
-            hpt.position_name,
-            hp.description,
-            hp.order_seq,
-            hp.supervisor_flag,
-            hp.enabled_flag,
-            hp.level_path,
-            hp.object_version_number,
-            hut.unit_name
-        FROM hpfm_position hp
-        JOIN hpfm_position_tl hpt ON hpt.position_id = hp.position_id AND hpt.lang = #{lang}
-        JOIN hpfm_unit_tl hut on hp.unit_id = hut.unit_id AND hut.lang = #{lang}
+        select
+        hut.unit_name company_name,
+        hut1.unit_name,
+        hp.position_id,
+        hp.position_code,
+        hpt.position_name
+        from hpfm_employee_assign hea
+        join hpfm_position hp on (hea.position_id = hp.position_id)
+        join hpfm_position_tl hpt on hpt.position_id = hp.position_id and hpt.lang = #{lang}
+        join hpfm_unit_tl hut on hut.unit_id = hea.unit_company_id and hut.lang = #{lang}
+        join hpfm_unit_tl hut1 on hut1.unit_id = hea.unit_id and hut1.lang = #{lang}
         <where>
             hp.tenant_id = #{tenantId}
             <if test="positionCode != null and positionCode != ''">
-            <bind name="positionCodeLike" value="'%' + positionCode + '%'"/>
+                <bind name="positionCodeLike" value="'%' + positionCode + '%'"/>
                 AND hp.position_code LIKE #{positionCodeLike}
             </if>
             <if test="positionName != null and positionName != ''">
                 <bind name="positionNameLike" value="'%' + positionName + '%'"/>
                 AND hpt.position_name LIKE #{positionNameLike}
             </if>
+            <if test="companyName !=null and ''!=companyName">
+                <bind name="companyNameLike" value="'%' + companyName + '%'"/>
+                and hut.unit_name like #{companyNameLike}
+            </if>
             AND hp.enabled_flag = 1
+            group by
+            hut.unit_name,
+            hut1.unit_name,
+            hp.position_id,
+            hp.position_code,
+            hpt.position_name
         </where>
     </select>
 
@@ -373,7 +377,7 @@
                     and (hpt.position_name like #{keyWordLike} or hp.position_code like #{keyWordLike})
             </if>
     </select>
-
+    
     <select id="selectPlusPositionTree" resultType="org.hzero.plugin.platform.hr.api.dto.PositionDTO">
         <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()"/>
         select
@@ -422,7 +426,7 @@
     </select>
 
     <select id="queryEmployeesByPositionId" resultType="org.hzero.plugin.platform.hr.api.dto.EmployeeDTO">
-        <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()" />
+        <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()"/>
         SELECT
             he.employee_Id,
             he.employee_num employee_code,

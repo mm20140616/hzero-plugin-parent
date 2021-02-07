@@ -13,14 +13,11 @@
         <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()" />
         select
             <include refid="baseColumn"/>,
-            utct.meaning unit_type_meaning,
             pu.unit_name parent_unit_name,
             hc.company_name
         from
             hpfm_unit u
         join hpfm_unit_tl ut on ut.unit_id = u.unit_id and ut.lang = #{lang}
-        join hpfm_lov_value utc on utc.lov_code = 'HPFM.HR.UNIT_TYPE' and utc.value = u.unit_type_code
-        join hpfm_lov_value_tl utct on utct.lov_value_id = utc.lov_value_id and utct.lang = ut.lang
         left join hpfm_unit pu on pu.unit_id = u.parent_unit_id
         left join hpfm_company hc on hc.company_id = u.company_id
         where
@@ -69,7 +66,6 @@
         <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()" />
         select
             <include refid="baseColumn"/>,
-            utct.meaning unit_type_meaning,
             pu.unit_name parent_unit_name,
             u.enable_budget_flag,
             u.cost_code,
@@ -77,8 +73,6 @@
         from
             hpfm_unit u
         join hpfm_unit_tl ut on ut.unit_id = u.unit_id and ut.lang = #{lang}
-        join hpfm_lov_value utc on utc.lov_code = 'HPFM.HR.UNIT_TYPE' and utc.value = u.unit_type_code
-        join hpfm_lov_value_tl utct on utct.lov_value_id = utc.lov_value_id and utct.lang = ut.lang
         join hpfm_unit pu on pu.unit_id = u.parent_unit_id
         LEFT JOIN smdm_cost_center scc ON scc.cost_code = u.cost_code AND scc.tenant_id = u.tenant_id
         LEFT JOIN smdm_cost_center_tl scctl ON scctl.cost_id = scc.cost_id AND scctl.lang = #{lang}
@@ -194,7 +188,6 @@
         <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()" />
         select
         <include refid="baseColumn"/>,
-        utct.meaning unit_type_meaning,
         pu.unit_name parent_unit_name,
         u.enable_budget_flag,
         u.cost_code,
@@ -202,8 +195,6 @@
         from
         hpfm_unit u
         join hpfm_unit_tl ut on ut.unit_id = u.unit_id and ut.lang = #{lang}
-        join hpfm_lov_value utc on utc.lov_code = 'HPFM.HR.UNIT_TYPE' and utc.value = u.unit_type_code
-        join hpfm_lov_value_tl utct on utct.lov_value_id = utc.lov_value_id and utct.lang = ut.lang
         join hpfm_unit pu on pu.unit_id = u.parent_unit_id
         LEFT JOIN smdm_cost_center scc ON scc.cost_code = u.cost_code
         LEFT JOIN smdm_cost_center_tl scctl ON scctl.cost_id = scc.cost_id AND scctl.lang = #{lang}
@@ -226,7 +217,6 @@
         <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()" />
         select
         <include refid="baseColumn"/>,
-        utct.meaning unit_type_meaning,
         pu.unit_name parent_unit_name,
         u.enable_budget_flag,
         u.cost_code,
@@ -234,8 +224,6 @@
         from
         hpfm_unit u
         join hpfm_unit_tl ut on ut.unit_id = u.unit_id and ut.lang = #{lang}
-        join hpfm_lov_value utc on utc.lov_code = 'HPFM.HR.UNIT_TYPE' and utc.value = u.unit_type_code
-        join hpfm_lov_value_tl utct on utct.lov_value_id = utc.lov_value_id and utct.lang = ut.lang
         join hpfm_unit pu on pu.unit_id = u.parent_unit_id
         LEFT JOIN smdm_cost_center scc ON scc.cost_code = u.cost_code
         LEFT JOIN smdm_cost_center_tl scctl ON scctl.cost_id = scc.cost_id AND scctl.lang = #{lang}
@@ -347,7 +335,6 @@
         <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()" />
         select
             <include refid="baseColumn"/>,
-            utct.meaning unit_type_meaning,
             case
             when su.parent_unit_id IS NOT NULL then 1
             else 0
@@ -356,8 +343,6 @@
         from
         hpfm_unit u
         join hpfm_unit_tl ut on ut.unit_id = u.unit_id and ut.lang = #{lang}
-        join hpfm_lov_value utc on utc.lov_code = 'HPFM.HR.UNIT_TYPE' and utc.value = u.unit_type_code
-        join hpfm_lov_value_tl utct on utct.lov_value_id = utc.lov_value_id and utct.lang = ut.lang
         <!--查询存在下级的根节点unitId信息-->
         left join (
             select
@@ -390,7 +375,6 @@
         <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()" />
         select
             <include refid="baseColumn"/>,
-            utct.meaning as unit_type_meaning,
             case
             when u2.parent_unit_id IS NOT NULL then 1
             else 0
@@ -400,8 +384,6 @@
         from
             hpfm_unit u
         join hpfm_unit_tl ut on ut.unit_id = u.unit_id and ut.lang = #{lang}
-        join hpfm_lov_value utc on utc.lov_code = 'HPFM.HR.UNIT_TYPE' and utc.value = u.unit_type_code
-        join hpfm_lov_value_tl utct on utct.lov_value_id = utc.lov_value_id and utct.lang = ut.lang
         <!--判断当前传入unitId的子节点是否存在下级 -->
         left join (
             select su1.parent_unit_id from hpfm_unit su1
@@ -439,14 +421,11 @@
         <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()" />
         select
             <include refid="baseColumn"/>,
-            utct.meaning unit_type_meaning,
             hc.company_name,
             pu.unit_name parent_unit_name
         from
         hpfm_unit u
         join hpfm_unit_tl ut on ut.unit_id = u.unit_id and ut.lang = #{lang}
-        join hpfm_lov_value utc on utc.lov_code = 'HPFM.HR.UNIT_TYPE' and utc.value = u.unit_type_code
-        join hpfm_lov_value_tl utct on utct.lov_value_id = utc.lov_value_id and utct.lang = ut.lang
         left join hpfm_company hc on hc.company_id = u.company_id
         left join hpfm_unit pu on pu.unit_id = u.parent_unit_id
         where
@@ -474,15 +453,12 @@
         <bind name="lang" value="@io.choerodon.mybatis.helper.LanguageHelper@language()" />
         SELECT
             <include refid="baseColumn"/>,
-            utct.meaning unit_type_meaning,
             u.enable_budget_flag,
             u.cost_code,
             scctl.cost_name
         FROM
           hpfm_unit u
         LEFT JOIN hpfm_unit_tl ut ON ut.unit_id = u.unit_id AND ut.lang = #{lang}
-        JOIN hpfm_lov_value utc ON utc.lov_code = 'HPFM.HR.UNIT_TYPE' AND utc.value = u.unit_type_code
-        JOIN hpfm_lov_value_tl utct ON utct.lov_value_id = utc.lov_value_id AND utct.lang = ut.lang
         LEFT JOIN smdm_cost_center scc ON scc.cost_code = u.cost_code
         LEFT JOIN smdm_cost_center_tl scctl ON scctl.cost_id = scc.cost_id AND scctl.lang = #{lang}
         where
@@ -517,6 +493,7 @@
         <foreach collection="unitCodes" index="index" item="item" separator="," open="(" close=")">
             #{item}
         </foreach>
+        ORDER BY u.level_path
     </select>
 
     <select id="selectAllUnit"   resultType="org.hzero.plugin.platform.hr.api.dto.UnitDTO">
@@ -551,14 +528,11 @@
     <select id="selectPlusCompany" resultType="org.hzero.plugin.platform.hr.api.dto.UnitDTO">
         select
             <include refid="baseColumn"/>,
-            utct.meaning unit_type_meaning,
             pu.unit_name parent_unit_name,
             hc.company_name
         from
             hpfm_unit u
         join hpfm_unit_tl ut on ut.unit_id = u.unit_id and ut.lang = #{lang}
-        join hpfm_lov_value utc on utc.lov_code = 'HPFM.HR.UNIT_TYPE' and utc.value = u.unit_type_code
-        join hpfm_lov_value_tl utct on utct.lov_value_id = utc.lov_value_id and utct.lang = ut.lang
         left join hpfm_unit pu on pu.unit_id = u.parent_unit_id
         left join hpfm_company hc on hc.company_id = u.company_id
         where
@@ -603,15 +577,12 @@
             u.company_id,
             u.quick_index,
             u.phoneticize,
-            utct.meaning unit_type_meaning,
             put.unit_name parent_unit_name,
             uct.unit_name unit_company_name,
             hc.company_name 
         from
             hpfm_unit u
         join hpfm_unit_tl ut on ut.unit_id = u.unit_id and ut.lang = #{lang}
-        join hpfm_lov_value utc on utc.lov_code = 'HPFM.HR.UNIT_TYPE' and utc.value = u.unit_type_code
-        join hpfm_lov_value_tl utct on utct.lov_value_id = utc.lov_value_id and utct.lang = ut.lang
         left join hpfm_unit pu on pu.unit_id = u.parent_unit_id
         join hpfm_unit_tl put on pu.unit_id = put.unit_id and put.lang = #{lang}
         left join hpfm_unit uc on u.unit_company_id = uc.unit_id
@@ -705,13 +676,10 @@
             u.object_version_number,
             u.company_id,
             u.quick_index,
-            u.phoneticize,
-            utct.meaning unit_type_meaning
+            u.phoneticize
         FROM
           hpfm_unit u
         LEFT JOIN hpfm_unit_tl ut ON ut.unit_id = u.unit_id AND ut.lang = #{lang}
-        JOIN hpfm_lov_value utc ON utc.lov_code = 'HPFM.HR.UNIT_TYPE' AND utc.value = u.unit_type_code
-        JOIN hpfm_lov_value_tl utct ON utct.lov_value_id = utc.lov_value_id AND utct.lang = ut.lang
         where
         u.level_path like concat((select level_path from hpfm_unit where unit_id = #{unitId}),'%')
         and u.tenant_id = #{tenantId}

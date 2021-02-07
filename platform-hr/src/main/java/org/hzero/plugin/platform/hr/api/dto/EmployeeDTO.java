@@ -135,6 +135,10 @@ public class EmployeeDTO extends AuditDomain {
      * 版本号
      */
     private Long objectVersionNumber;
+    /**
+     * 所属公司名称
+     */
+    private String companyName;
 
     public Long getEmployeeId() {
         return employeeId;
@@ -344,40 +348,49 @@ public class EmployeeDTO extends AuditDomain {
     }
 
     public Integer getPrimaryPositionFlag() {
-		return primaryPositionFlag;
-	}
+        return primaryPositionFlag;
+    }
 
-	public void setPrimaryPositionFlag(Integer primaryPositionFlag) {
-		this.primaryPositionFlag = primaryPositionFlag;
-	}
+    public void setPrimaryPositionFlag(Integer primaryPositionFlag) {
+        this.primaryPositionFlag = primaryPositionFlag;
+    }
 
-	public List<UnitAssignDTO> getList() {
-		return list;
-	}
+    public List<UnitAssignDTO> getList() {
+        return list;
+    }
 
-	public void setList(List<UnitAssignDTO> list) {
-		this.list = list;
-	}
+    public void setList(List<UnitAssignDTO> list) {
+        this.list = list;
+    }
 
-	public Long getObjectVersionNumber() {
-		return objectVersionNumber;
-	}
+    public Long getObjectVersionNumber() {
+        return objectVersionNumber;
+    }
 
-	public void setObjectVersionNumber(Long objectVersionNumber) {
-		this.objectVersionNumber = objectVersionNumber;
-	}
+    public void setObjectVersionNumber(Long objectVersionNumber) {
+        this.objectVersionNumber = objectVersionNumber;
+    }
 
-	@Override
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
+
+    @Override
     public String toString() {
         return "EmployeeDTO{" +
                 "employeeId=" + employeeId +
                 ", employeeCode='" + employeeCode + '\'' +
                 ", name='" + name + '\'' +
+                ", nameEn='" + nameEn + '\'' +
                 ", bornDate=" + bornDate +
                 ", email='" + email + '\'' +
                 ", mobile='" + mobile + '\'' +
                 ", joinDate=" + joinDate +
-                ", gender='" + gender + '\'' +
+                ", gender=" + gender +
                 ", certificateId='" + certificateId + '\'' +
                 ", status='" + status + '\'' +
                 ", statusName='" + statusName + '\'' +
@@ -389,7 +402,13 @@ public class EmployeeDTO extends AuditDomain {
                 ", certificateType='" + certificateType + '\'' +
                 ", effectiveStartDate=" + effectiveStartDate +
                 ", effectiveEndDate=" + effectiveEndDate +
+                ", phoneticize='" + phoneticize + '\'' +
+                ", quickIndex='" + quickIndex + '\'' +
                 ", idList=" + idList +
-                "} " + super.toString();
+                ", primaryPositionFlag=" + primaryPositionFlag +
+                ", list=" + list +
+                ", objectVersionNumber=" + objectVersionNumber +
+                ", companyName='" + companyName + '\'' +
+                '}';
     }
 }

@@ -1,14 +1,15 @@
 package org.hzero.plugin.platform.hr.domain.repository;
 
-import io.choerodon.core.domain.Page;
-import io.choerodon.mybatis.pagehelper.domain.PageRequest;
+import java.util.Date;
+import java.util.List;
+
 import org.hzero.mybatis.base.BaseRepository;
 import org.hzero.plugin.platform.hr.api.dto.EmployeeDTO;
 import org.hzero.plugin.platform.hr.domain.entity.Employee;
 import org.hzero.plugin.platform.hr.domain.entity.Position;
 
-import java.util.Date;
-import java.util.List;
+import io.choerodon.core.domain.Page;
+import io.choerodon.mybatis.pagehelper.domain.PageRequest;
 
 /**
  * 员工表资源库
@@ -49,9 +50,10 @@ public interface EmployeeRepository extends BaseRepository<Employee> {
      * @param name        　姓名
      * @param enabledFlag 有效标识
      * @param pageRequest 　分页条件
+     * @param userId 　用户Id
      * @return 所有的员工
      */
-    Page<Employee> listEmployee(Long tenantId, String employeeNum, String name, Integer enabledFlag, PageRequest pageRequest);
+    Page<Employee> listEmployee(Long tenantId, String employeeNum, String name, Integer enabledFlag, PageRequest pageRequest, Long userId);
 
     /**
      * 查询当前员工的所有上级领导的员工编号
